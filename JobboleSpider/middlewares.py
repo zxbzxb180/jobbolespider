@@ -6,6 +6,7 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from fake_useragent import UserAgent
 
 
 class JobbolespiderSpiderMiddleware(object):
@@ -101,3 +102,8 @@ class JobbolespiderDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomUserAgentMiddleware(object):
+    def process_request(self, request, spider):
+        request.headers.setdefault("User-Agent", UserAgent().random)
